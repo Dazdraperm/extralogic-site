@@ -1,0 +1,35 @@
+body {
+
+    margin-left: 1px;
+    padding-left: 1px;
+}
+
+li {
+    list-style-type: none;
+}
+
+ul {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.form-fields {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    padding: 1px 1px 10px;
+}
+
+.width {
+    width: 150px;
+    padding-left: 10px
+}
+
+input {
+    width: 150px
+}

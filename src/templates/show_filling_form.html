@@ -1,0 +1,44 @@
+{% if fields_form %}
+    <div class="form-field">
+        <div>
+            Название формы: {{ fields_form[0].name_form }}
+        </div>
+        <div>
+            Form_uid: {{ fields_form[0].form_uid }}
+        </div>
+    </div>
+    <ul>
+        <li>
+            <div class="form-fields">
+                <div class="width">Название поля</div>
+                <div class="width">Описание поля</div>
+                <div class="width">Тип поля</div>
+                <div class="width">Значение поля</div>
+            </div>
+        </li>
+        {% for field in fields_form %}
+            <li>
+                <div class="form-fields">
+                    <div class="form-field">
+                        <label><input disabled value="{{ field.name_field }}"></label>
+                    </div>
+                    <div class="form-field">
+                        <label><input disabled value="{{ field.description }}"></label>
+                    </div>
+                    <div class="form-field">
+                        <label>
+                            <select class="width">
+                                <option disabled selected="selected">
+                                    {{ field.type_field }}
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="form-field">
+                        <label><input disabled value=" {{ field.value_field }}"></label>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
