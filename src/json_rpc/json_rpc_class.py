@@ -30,24 +30,54 @@ class JsonRPC:
         self._json_rpc_version = json_rpc_version
         self._timeout = 30
 
-    def get_form_data(self, form_uid: str):
+    def get_fields(self, form_uid: str):
         """
         Получение формы и ее полей
         :param form_uid:
         :return:
         """
-        method = 'form.get_form_data'
-
+        method = 'form.get_fields'
         params = {'form_uid': form_uid}
 
-        body = {
-            'method': method,
-            'jsonrpc': self._json_rpc_version,
-            'id': self._request_id,
-            'params': params
-        }
+        response = self.__call_api(method=method, params=params)
 
-        response = self.__call_api(body=body)
+        return response
+
+    def get_form_data(self, form_uid: str):
+        """
+        Получение формы, ее полей и значений полей
+        :param form_uid:
+        :return:
+        """
+        method = 'form.get_form_data'
+        params = {'form_uid': form_uid}
+
+        response = self.__call_api(method=method, params=params)
+
+        return response
+
+    def update_value_fields(self, value_fields: list):
+        """
+        Отправка значений у полей
+
+        :param value_fields:
+        [
+        {
+            id: 1,
+            value_field: "value_1"
+        },
+        {
+            id: 2,
+            value_field: "value_2"
+        }
+        ]
+        :return:
+        """
+        method = 'form.update_value_fields_by_id'
+        params = {'value_fields': value_fields}
+
+        response = self.__call_api(method=method, params=params)
+
         return response
 
     def set_request_id(self, request_id: int) -> None:
@@ -65,8 +95,15 @@ class JsonRPC:
         """
         return f'{url}{api_prefix}'
 
-    def __call_api(self, body) -> Optional[Response]:
+    def __call_api(self, method: str, params: dict) -> Optional[Response]:
         response = None
+
+        body = {
+            'method': method,
+            'jsonrpc': self._json_rpc_version,
+            'id': self._request_id,
+            'params': params
+        }
 
         try:
             response = requests.post(self.__api_url, json=body, timeout=self._timeout)
